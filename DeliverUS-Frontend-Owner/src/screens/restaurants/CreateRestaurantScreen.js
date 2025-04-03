@@ -15,6 +15,32 @@ import { ErrorMessage, Form, Formik } from 'formik'
 import TextError from '../../components/TextError'
 
 export default function CreateRestaurantScreen () {
+  const [restaurantCategories, setRestaurantCategories] = useState([])
+  const [open, setOpen] = useState(false)
+
+  useEffect(() => {
+    async function fetchRestaurantCategories () {
+      try {
+        const fetchedRestaurantCategories = await getRestaurantCategories()
+        const fetchedRestaurantCategoriesReshaped = fetchedRestaurantCategories.map((e) => {
+          return {
+            label: e.name,
+            value: e.id
+          }
+        })
+        setRestaurantCategories(fetchedRestaurantCategoriesReshaped)
+      } catch (error) {
+        showMessage({
+          message: `There was an error while retrieving restaurant categories. ${error} `,
+          type: 'error',
+          style: GlobalStyles.flashStyle,
+          titleStyle: GlobalStyles.flashTextStyle
+        })
+      }
+    }
+    fetchRestaurantCategories()
+  }, [])
+
   const initialRestuarantValues = {
     name: null,
     description: null,
@@ -91,7 +117,22 @@ export default function CreateRestaurantScreen () {
           name='phone'
           label='Phone:'
         />
+        <DropDownPicker
+          open={open}
+          value={values.restaurantCategoryId}
+          items={restaurantCategories}
+          setOpen={setOpen}
+          onSelectItem={ item => {
+            setFieldValue('restaurantCategoryId', item.value)
+          }}
+          setItems={setRestaurantCategories}
+          placeholder="Select the restaurant category"
+          containerStyle={{ height: 40, marginTop: 20 }}
+          style={{ backgroundColor: GlobalStyles.brandBackground }}
+          dropDownStyle={{ backgroundColor: '#fafafa' }}
+        />
         <Pressable
+         style={{ marginTop: '20px' }}
           onPress={() =>
             pickImage(
               async result => {
