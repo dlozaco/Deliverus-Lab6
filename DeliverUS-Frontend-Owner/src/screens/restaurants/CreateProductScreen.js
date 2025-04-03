@@ -57,82 +57,80 @@ export default function CreateProductScreen ({ navigation, route }) {
     >
     {({ setFieldValue, values }) => (
         <ScrollView>
-            <View style={{ alignItems: 'center' }}>
-                <View style={{ width: '60%' }}>
-                    <InputItem
-                        name='name'
-                        label='Name:'
-                    />
-                    <InputItem
-                        name='description'
-                        label='Description:'
-                    />
-                    <InputItem
-                        name='price'
-                        label='Price:'
-                    />
-                    <Pressable
-                        style={{ marginTop: '20px' }}
-                        onPress={() =>
-                          pickImage(
-                            async result => {
-                              await setFieldValue('logo', result)
-                            }
-                          )
-                            }
-                        >
-                        <TextRegular>Image: </TextRegular>
-                        <Image
-                          style={styles.image}
-                          source={values.image ? { uri: values.image.assets[0].uri } : defaultProductImage}
-                        />
-                    </Pressable>
-                    <InputItem
-                        name='order'
-                        label='Order:'
-                    />
-                    <DropDownPicker
-                        open={open}
-                        value={values.restaurantCategoryId}
-                        items={productCategories}
-                        setOpen={setOpen}
-                        onSelectItem={ item => {
-                          setFieldValue('restaurantCategoryId', item.value)
-                        }}
-                        setItems={setProductCategories}
-                        placeholder="Select the restaurant category"
-                        containerStyle={{ height: 40, marginTop: 20 }}
-                        style={{ backgroundColor: GlobalStyles.brandBackground }}
-                        dropDownStyle={{ backgroundColor: '#fafafa' }}
-                    />
-
-                    <TextRegular style={styles.switch}>Is it available?</TextRegular>
-                    <Switch
-                    trackColor={{ false: GlobalStyles.brandSecondary, true: GlobalStyles.brandPrimary }}
-                    thumbColor={values.availability ? GlobalStyles.brandSecondary : '#f4f3f4'}
-                    value={values.availability}
-                    style={styles.switch}
-                    onValueChange={value =>
-                      setFieldValue('availability', value)
+          <View style={{ alignItems: 'center' }}>
+            <View style={{ width: '60%' }}>
+              <InputItem
+                name='name'
+                label='Name:'
+              />
+              <InputItem
+                name='description'
+                label='Description:'
+              />
+              <InputItem
+                name='price'
+                label='Price:'
+              />
+              <Pressable
+                style={{ marginTop: '20px' }}
+                onPress={() =>
+                  pickImage(
+                    async result => {
+                      await setFieldValue('logo', result)
                     }
-                    />
-                    <Pressable
-                              onPress={() => console.log('Button pressed')
-                              }
-                              style={({ pressed }) => [
-                                {
-                                  backgroundColor: pressed
-                                    ? GlobalStyles.brandPrimaryTap
-                                    : GlobalStyles.brandPrimary
-                                },
-                                styles.button
-                              ]}>
-                              <TextRegular textStyle={styles.text}>
-                                Create product
-                              </TextRegular>
-                            </Pressable>
-                </View>
+                  )
+                }
+              >
+                <TextRegular>Image: </TextRegular>
+                <Image
+                  style={styles.image}
+                  source={values.image ? { uri: values.image.assets[0].uri } : defaultProductImage}
+                />
+              </Pressable>
+              <InputItem
+                name='order'
+                label='Order:'
+              />
+              <DropDownPicker
+                open={open}
+                value={values.restaurantCategoryId}
+                items={productCategories}
+                setOpen={setOpen}
+                onSelectItem={ item => {
+                  setFieldValue('restaurantCategoryId', item.value)
+                }}
+                setItems={setProductCategories}
+                placeholder="Select the restaurant category"
+                containerStyle={{ height: 40, marginTop: 20 }}
+                style={{ backgroundColor: GlobalStyles.brandBackground }}
+                dropDownStyle={{ backgroundColor: '#fafafa' }}
+              />
+
+              <TextRegular style={styles.switch}>Is it available?</TextRegular>
+              <Switch
+                trackColor={{ false: GlobalStyles.brandSecondary, true: GlobalStyles.brandPrimary }}
+                thumbColor={values.availability ? GlobalStyles.brandSecondary : '#f4f3f4'}
+                value={values.availability}
+                style={styles.switch}
+                onValueChange={value =>
+                  setFieldValue('availability', value)
+                }
+              />
+              <Pressable
+                onPress={() => console.log('Button pressed') }
+                style={({ pressed }) => [{
+                  backgroundColor: pressed
+                    ? GlobalStyles.brandPrimaryTap
+                    : GlobalStyles.brandPrimary
+                },
+                styles.button
+                ]}>
+                <TextRegular textStyle={styles.text}>
+                  Create product
+                </TextRegular>
+              </Pressable>
             </View>
+          </View>
         </ScrollView>
     )}
     </Formik>

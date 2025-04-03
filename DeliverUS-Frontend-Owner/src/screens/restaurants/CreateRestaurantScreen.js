@@ -132,7 +132,7 @@ export default function CreateRestaurantScreen () {
           dropDownStyle={{ backgroundColor: '#fafafa' }}
         />
         <Pressable
-         style={{ marginTop: '20px' }}
+          style={{ marginTop: '20px' }}
           onPress={() =>
             pickImage(
               async result => {
